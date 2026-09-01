@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refleksi Pengalaman Belajar, Pembelajaran Sosial Emosional</title>
+<style>
+:root{
+  --ui:1.18;                 /* diubah oleh kontrol drag */
+  --ink:#eef2ff; --muted:#aab3d0;
+  --c1:#7c5cff; --c2:#22d3ee; --c3:#f472b6; --c4:#fbbf24; --c5:#34d399;
+  --line:rgba(255,255,255,.15);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:#04050d; color:var(--ink);
+  font-family:'Segoe UI',system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  line-height:1.7; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+}
+#spacer{width:1px}
+
+/* ===== backdrop ===== */
+#sky{position:fixed;inset:0;z-index:0}
+.glow{
+  position:fixed;inset:-25%;z-index:0;pointer-events:none;filter:blur(110px);opacity:.5;
+  background:
+    radial-gradient(34% 28% at 24% 28%, rgba(124,92,255,.60), transparent 66%),
+    radial-gradient(30% 26% at 78% 38%, rgba(34,211,238,.42), transparent 66%),
+    radial-gradient(36% 30% at 52% 82%, rgba(244,114,182,.34), transparent 66%);
+  transition:transform .5s cubic-bezier(.2,.8,.2,1);
+}
+#vignette{position:fixed;inset:0;z-index:6;pointer-events:none;
+  background:radial-gradient(120% 90% at 50% 50%, transparent 46%, rgba(2,3,10,.46) 80%, rgba(2,3,10,.88) 100%)}
+
+/* ===== 3D stage ===== */
+#stage{position:fixed;inset:0;z-index:3;perspective:1100px;perspective-origin:50% 50%;pointer-events:none}
+#world{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
+.panel{
+  position:absolute;left:50%;top:50%;
+  width:min(calc(760px * var(--ui)), 93vw);
+  font-size:calc(16.5px * var(--ui));
+  transform-style:preserve-3d;pointer-events:none;
+  backface-visibility:hidden;
+}
+.panel.wide{width:min(calc(920px * var(--ui)), 95vw)}
+.ring{
+  position:absolute;left:50%;top:50%;width:150vmin;height:96vmin;margin:-48vmin 0 0 -75vmin;
+  border:1px solid rgba(124,92,255,.28);border-radius:26px;
+  box-shadow:inset 0 0 90px rgba(34,211,238,.07);
+}
+.ring.alt{border-color:rgba(34,211,238,.22)}
+
+/* ===== panel content ===== */
+.pad{
+  background:linear-gradient(158deg,rgba(23,25,48,.93),rgba(10,12,26,.90));
+  border:1px solid var(--line); border-radius:1.4em; padding:1.9em 2em;
+  box-shadow:0 40px 90px -34px rgba(0,0,0,.92), inset 0 1px 0 rgba(255,255,255,.10);
+  position:relative; overflow:hidden;
+}
+.pad:before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(72% 58% at 10% 0%,rgba(255,255,255,.10),transparent 62%)}
+.marker{text-align:center}
+.marker .num{font-size:6.4em;font-weight:900;line-height:.82;letter-spacing:-.06em;
+  color:transparent;-webkit-text-stroke:1.6px rgba(255,255,255,.3)}
+.marker h2{font-size:1.95em;font-weight:800;letter-spacing:-.02em;margin-top:.2em;
+  background:linear-gradient(100deg,#fff,var(--c2),var(--c1));-webkit-background-clip:text;background-clip:text;color:transparent}
+.marker p{color:var(--muted);margin-top:.6em;font-size:.95em}
+
+.kicker{font-size:.68em;letter-spacing:.36em;text-transform:uppercase;color:var(--c2);margin-bottom:1em}
+h1{font-size:3.1em;line-height:1.04;font-weight:800;letter-spacing:-.025em;text-align:center;
+  background:linear-gradient(104deg,#fff 6%,var(--c2) 40%,var(--c1) 66%,var(--c3) 96%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+h3{font-size:1.36em;font-weight:750;color:#fff;margin-bottom:.5em;letter-spacing:-.01em;line-height:1.28}
+h4{font-size:1em;font-weight:700;color:#fff;margin-bottom:.15em}
+p{color:#e3e8f9;font-size:1em}
+p+p{margin-top:.6em}
+.small{font-size:.9em;color:var(--muted);line-height:1.62}
+.hl{color:#fff;font-weight:700}
+ul{margin:.5em 0 0 1.2em}
+li{margin-bottom:.38em;color:#e3e8f9;font-size:.96em;line-height:1.62}
+li::marker{color:var(--c2)}
+.tag{display:inline-block;font-size:.62em;letter-spacing:.2em;text-transform:uppercase;font-weight:700;
+  padding:.42em 1em;border-radius:999px;margin-bottom:.9em}
+.t1{background:rgba(124,92,255,.18);color:#c7b8ff;border:1px solid rgba(124,92,255,.45)}
+.t2{background:rgba(34,211,238,.15);color:#a5f3fc;border:1px solid rgba(34,211,238,.42)}
+.t3{background:rgba(244,114,182,.15);color:#fbcfe8;border:1px solid rgba(244,114,182,.42)}
+.t4{background:rgba(251,191,36,.14);color:#fde68a;border:1px solid rgba(251,191,36,.42)}
+.t5{background:rgba(52,211,153,.14);color:#a7f3d0;border:1px solid rgba(52,211,153,.42)}
+.chips{display:flex;flex-wrap:wrap;gap:.55em;justify-content:center;margin-top:1.4em}
+.chip{border:1px solid var(--line);background:rgba(255,255,255,.06);border-radius:999px;
+  padding:.42em .95em;font-size:.8em;color:#dbe2ff}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:.9em;margin-top:.8em}
+.box{border:1px solid var(--line);border-radius:.9em;padding:.8em .95em;background:rgba(255,255,255,.04)}
+.box.now{border-color:rgba(52,211,153,.42);background:rgba(52,211,153,.07)}
+.box.then{border-color:rgba(244,114,182,.33);background:rgba(244,114,182,.055)}
+.box h4{font-size:.7em;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.4em}
+.quote{border-left:3px solid var(--c4);background:rgba(251,191,36,.07);padding:.7em .95em;border-radius:0 .8em .8em 0;
+  font-style:italic;color:#fde68a;margin-top:.85em;font-size:.9em;line-height:1.6}
+.fact{border-left:3px solid var(--c2);background:rgba(34,211,238,.07);padding:.7em .95em;border-radius:0 .8em .8em 0;
+  margin-top:.7em;font-size:.9em;color:#cdf5fb;line-height:1.6}
+.fact b{color:#fff}
+.step{display:flex;gap:.8em;margin-bottom:.75em;align-items:flex-start}
+.dot{flex:0 0 1.75em;height:1.75em;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.8em;
+  background:rgba(124,92,255,.22);border:1px solid rgba(124,92,255,.5);color:#d6ccff;margin-top:.15em}
+.dot.g{background:rgba(52,211,153,.2);border-color:rgba(52,211,153,.5);color:#a7f3d0}
+.dot.y{background:rgba(251,191,36,.2);border-color:rgba(251,191,36,.5);color:#fde68a}
+.dot.c{background:rgba(34,211,238,.2);border-color:rgba(34,211,238,.5);color:#a5f3fc}
+.dot.p{background:rgba(244,114,182,.2);border-color:rgba(244,114,182,.5);color:#fbcfe8}
+table{border-collapse:collapse;width:100%;margin-top:.7em;font-size:.86em}
+th,td{padding:.55em .7em;text-align:left;border-bottom:1px solid rgba(255,255,255,.09);vertical-align:top;color:#e3e8f9}
+th{background:rgba(124,92,255,.16);color:#fff;font-size:.78em;letter-spacing:.1em;text-transform:uppercase}
+tr:last-child td{border-bottom:0}
+
+/* prisma segilima CASEL */
+.caselgrid{display:grid;grid-template-columns:16em 1fr;gap:1.3em;align-items:center;margin-top:.5em}
+.prismwrap{display:grid;place-items:center;height:16em;perspective:850px}
+.prism{width:150px;height:172px;position:relative;transform-style:preserve-3d;animation:spin 26s linear infinite}
+@keyframes spin{from{transform:rotateX(-12deg) rotateY(0)}to{transform:rotateX(-12deg) rotateY(-360deg)}}
+.pf{position:absolute;left:0;top:0;width:150px;height:172px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:10px;
+  border:1px solid rgba(255,255,255,.34);border-radius:10px;font-size:12px;font-weight:700;color:#fff;
+  box-shadow:inset 0 0 34px rgba(255,255,255,.09);backface-visibility:hidden}
+.pf b{display:block;font-size:21px;line-height:1;margin-bottom:7px;opacity:.85}
+.pf span{display:block;font-size:10px;font-weight:600;opacity:.85;margin-top:5px}
+.p1{background:rgba(124,92,255,.42);transform:rotateY(0deg)   translateZ(103px)}
+.p2{background:rgba(34,211,238,.38);transform:rotateY(72deg)  translateZ(103px)}
+.p3{background:rgba(244,114,182,.38);transform:rotateY(144deg) translateZ(103px)}
+.p4{background:rgba(251,191,36,.36);transform:rotateY(216deg) translateZ(103px)}
+.p5{background:rgba(52,211,153,.38);transform:rotateY(288deg) translateZ(103px)}
+.caslist{display:flex;flex-direction:column;gap:.5em}
+.casitem{display:flex;gap:.7em;align-items:flex-start;border:1px solid var(--line);border-radius:.8em;
+  padding:.55em .75em;background:rgba(255,255,255,.04)}
+.casitem .n{flex:0 0 1.5em;height:1.5em;border-radius:.45em;display:grid;place-items:center;font-size:.8em;font-weight:800;color:#06070f}
+.n1{background:#a78bfa}.n2{background:#67e8f9}.n3{background:#f9a8d4}.n4{background:#fcd34d}.n5{background:#6ee7b7}
+.casitem h4{font-size:.92em;margin-bottom:.05em}
+.casitem p{font-size:.83em;color:var(--muted);line-height:1.5}
+
+/* ===== HUD & NAVIGASI ===== */
+#bar{position:fixed;top:0;left:0;height:3px;width:0;z-index:30;
+  background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));box-shadow:0 0 16px rgba(34,211,238,.8)}
+
+#dots{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:10px}
+#dots button{all:unset;cursor:pointer;width:9px;height:9px;border-radius:50%;border:1px solid rgba(255,255,255,.42);position:relative;transition:.22s}
+#dots button:hover,#dots button.on{background:var(--c2);border-color:var(--c2);box-shadow:0 0 12px var(--c2);transform:scale(1.35)}
+#dots button:hover:after{content:attr(data-l);position:absolute;right:20px;top:50%;transform:translateY(-50%);
+  white-space:nowrap;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#fff;
+  background:rgba(8,10,24,.9);border:1px solid var(--line);padding:5px 11px;border-radius:999px;backdrop-filter:blur(8px)}
+
+.hudbtn{
+  all:unset;cursor:pointer;display:grid;place-items:center;
+  width:42px;height:42px;border-radius:13px;border:1px solid var(--line);
+  background:rgba(8,10,24,.72);backdrop-filter:blur(10px);color:#dbe2ff;font-size:15px;transition:.2s
+}
+.hudbtn:hover{border-color:var(--c2);color:#fff;box-shadow:0 0 18px rgba(34,211,238,.35);transform:translateY(-2px)}
+#navpad{position:fixed;right:18px;bottom:18px;z-index:30;display:flex;gap:9px;align-items:center}
+#counter{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:var(--muted);
+  border:1px solid var(--line);background:rgba(8,10,24,.72);backdrop-filter:blur(10px);
+  padding:11px 13px;border-radius:13px;letter-spacing:.08em}
+
+#zoombox{
+  position:fixed;left:18px;bottom:18px;z-index:30;display:flex;align-items:center;gap:8px;
+  border:1px solid var(--line);background:rgba(8,10,24,.72);backdrop-filter:blur(10px);
+  border-radius:14px;padding:7px 9px;user-select:none
+}
+#zoombox .lbl{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding-left:3px}
+#grip{
+  cursor:ew-resize;touch-action:none;display:flex;align-items:center;gap:9px;
+  border:1px dashed rgba(255,255,255,.28);border-radius:10px;padding:6px 11px;color:#fff;font-size:12.5px;
+  font-family:ui-monospace,Menlo,Consolas,monospace;transition:.2s
+}
+#grip:hover,#grip.drag{border-color:var(--c2);background:rgba(34,211,238,.12);box-shadow:0 0 18px rgba(34,211,238,.25)}
+#grip .bars{display:flex;gap:2.5px;align-items:flex-end}
+#grip .bars i{display:block;width:2.5px;background:var(--c2);border-radius:2px;opacity:.85}
+#grip .bars i:nth-child(1){height:6px}#grip .bars i:nth-child(2){height:10px}#grip .bars i:nth-child(3){height:14px}
+.zbtn{all:unset;cursor:pointer;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;
+  border:1px solid var(--line);color:#dbe2ff;font-size:14px;font-weight:700;transition:.2s}
+.zbtn:hover{border-color:var(--c2);color:#fff;background:rgba(34,211,238,.12)}
+
+#menu{
+  position:fixed;inset:0;z-index:40;display:none;place-items:center;
+  background:rgba(3,4,12,.86);backdrop-filter:blur(14px);padding:5vh 5vw
+}
+#menu.on{display:grid}
+#menuin{width:min(860px,94vw);max-height:88vh;overflow:auto}
+#menuin h3{font-size:20px;margin-bottom:14px;color:#fff}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px}
+.mgrid button{
+  all:unset;cursor:pointer;border:1px solid var(--line);border-radius:12px;padding:11px 13px;
+  background:rgba(255,255,255,.04);transition:.2s
+}
+.mgrid button:hover{border-color:var(--c2);background:rgba(34,211,238,.1);transform:translateY(-2px)}
+.mgrid .mi{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--c2);display:block;margin-bottom:3px}
+.mgrid .mt{font-size:13.5px;color:#fff;font-weight:600}
+#menuclose{position:fixed;top:18px;right:18px}
+#menubtn{position:fixed;left:18px;top:18px;z-index:30}
+#modebtn{position:fixed;left:18px;top:70px;z-index:30}
+.hudbtn.wide2{width:auto;padding:0 14px;gap:8px;grid-auto-flow:column;font-size:13.5px;letter-spacing:.04em}
+.hudbtn.wide2 span{font-size:12.5px;color:#cdd5f5}
+@media(max-width:820px){.hudbtn.wide2 span{display:none}.hudbtn.wide2{width:42px;padding:0}}
+
+#cue{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:29;text-align:center;transition:opacity .5s}
+#cue p{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted)}
+.mouse{width:22px;height:35px;border:1.5px solid var(--line);border-radius:13px;margin:9px auto 0;position:relative}
+.mouse:after{content:"";position:absolute;top:6px;left:50%;width:3px;height:7px;border-radius:2px;background:var(--c2);
+  transform:translateX(-50%);animation:wheel 1.7s infinite}
+@keyframes wheel{0%{opacity:0;top:6px}35%{opacity:1}100%{opacity:0;top:20px}}
+
+/* ===== MODE DATAR (non-3D) ===== */
+body.flat #spacer{display:none}
+body.flat #stage{position:static;perspective:none;pointer-events:auto;padding:96px 0 120px}
+body.flat #world{position:static;transform:none !important;transform-style:flat}
+body.flat .ring{display:none}
+body.flat #vignette{display:none}
+body.flat .panel{
+  position:relative;left:auto;top:auto;
+  transform:none !important;opacity:1 !important;visibility:visible !important;
+  margin:0 auto 46px;pointer-events:auto;
+}
+body.flat .panel .marker{padding:26px 0}
+body.flat #cue{display:none}
+body.flat #dots{display:none}
+
+@media(max-width:820px){
+  .duo{grid-template-columns:1fr}
+  .caselgrid{grid-template-columns:1fr}
+  .prismwrap{height:13em}
+  #dots{display:none}
+  #zoombox .lbl{display:none}
+  #counter{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="spacer"></div>
+<canvas id="sky"></canvas>
+<div class="glow"></div>
+
+<div id="stage"><div id="world">
+
+<!-- ================= HERO ================= -->
+<div class="panel" data-l="Awal" data-mark="1">
+  <p class="kicker" style="text-align:center">Pembelajaran Sosial Emosional</p>
+  <h1>Refleksi<br>Pengalaman Belajar</h1>
+  <div class="chips">
+    <span class="chip">Awang Haris Prasetyo Adhi</span>
+    <span class="chip">95202581O</span>
+    <span class="chip">35741 · Matematika</span>
+  </div>
+  <p class="small" style="text-align:center;margin-top:1.1em">Connection · Challenge · Concept · Change</p>
+</div>
+
+<!-- ================= 01 CONNECTION ================= -->
+<div class="panel" data-l="Connection" data-mark="1" data-x="-38">
+  <div class="marker"><div class="num">01</div><h2>Connection</h2>
+  <p>Keterkaitan materi dengan peran saya sebagai calon guru</p></div>
+</div>
+
+<div class="panel" data-l="Jawaban 1" data-x="28" data-y="-8">
+  <div class="pad">
+    <span class="tag t1">Pertanyaan 1</span>
+    <h3>Apa keterkaitan materi perkuliahan dengan peran saya sebagai calon guru?</h3>
+    <p>Bagi saya, materi ini berguna dalam pembelajaran agar saya bisa menjadi
+    <span class="hl">guru yang profesional</span>, yaitu guru yang mampu
+    <span class="hl">memahami siswa</span> dan bisa <span class="hl">memberikan penanganan yang tepat</span>.</p>
+    <p>Selama ini saya membayangkan profesionalisme guru itu soal penguasaan materi dan kemampuan
+    menjelaskan. Setelah mengikuti perkuliahan ini saya sadar ada satu lapis lagi yang sama pentingnya:
+    kemampuan membaca kondisi murid. Murid yang sama bisa membutuhkan respons berbeda pada hari yang
+    berbeda, dan tugas saya mengenali itu sebelum memutuskan harus bersikap bagaimana.</p>
+    <p>Kaitannya juga ke arah diri saya sendiri. Guru yang tidak bisa mengelola emosinya tidak akan bisa
+    menangani emosi orang lain. Jadi kompetensi ini bukan hanya untuk murid, tapi juga bekal supaya saya
+    tetap sehat dan tahan menghadapi tekanan pekerjaan.</p>
+  </div>
+</div>
+
+<div class="panel" data-l="Di Matematika" data-x="-30" data-y="8">
+  <div class="pad">
+    <span class="tag t1">Pertanyaan 1 · lanjutan</span>
+    <h3>Kaitannya dengan mata pelajaran yang saya ampu</h3>
+    <p>Matematika adalah mata pelajaran yang paling sering memunculkan rasa cemas dan takut salah.
+    Banyak murid sudah menyerah bahkan sebelum mencoba, bukan karena tidak mampu, tapi karena
+    perasaannya lebih dulu menghalangi.</p>
+    <p>Di titik itulah materi ini terasa sangat nyambung dengan peran saya. "Penanganan yang tepat" di
+    kelas Matematika sering berarti menenangkan dulu murid yang panik melihat soal, memberi tahu bahwa
+    salah itu wajar, baru masuk ke penyelesaiannya.</p>
+    <ul>
+      <li>Menghindari label "tidak bisa matematika", karena label seperti itu melekat bertahun-tahun.</li>
+      <li>Memberi apresiasi pada usaha dan proses berpikir, bukan hanya jawaban yang benar.</li>
+      <li>Mendorong murid menjelaskan alasan jawabannya supaya berani berpendapat.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ================= 02 CHALLENGE ================= -->
+<div class="panel" data-l="Challenge" data-mark="1" data-x="38">
+  <div class="marker"><div class="num">02</div><h2>Challenge</h2>
+  <p>Materi yang berbeda dari praktik saya selama ini</p></div>
+</div>
+
+<div class="panel" data-l="Beda 1" data-x="-32" data-y="8">
+  <div class="pad">
+    <span class="tag t2">Perbedaan 1</span>
+    <h3>Dulu tidak pernah cek perasaan, langsung masuk materi</h3>
+    <div class="duo">
+      <div class="box then"><h4>Praktik saya</h4><p class="small">Salam, presensi, langsung materi.
+      Kondisi emosi murid tidak pernah saya tanyakan karena saya pikir itu memakan waktu dan bukan
+      bagian dari pelajaran.</p></div>
+      <div class="box now"><h4>Materi perkuliahan</h4><p class="small">Ada <i>circle time</i> atau
+      <i>check-in</i> perasaan di awal. Murid menyebut satu kata perasaannya hari ini, guru menanggapi,
+      baru masuk materi.</p></div>
+    </div>
+    <p style="margin-top:.85em">Yang membuat saya tertegur: ternyata perasaan murid itu
+    <span class="hl">data</span>, bukan basa-basi. Kalau saya tahu separuh kelas sedang lelah atau cemas,
+    saya bisa mengubah cara membuka pelajaran. Selama ini saya mengajar tanpa data itu sama sekali, lalu
+    bingung sendiri kenapa kelas terasa dingin.</p>
+  </div>
+</div>
+
+<div class="panel" data-l="Beda 2" data-x="32" data-y="-8">
+  <div class="pad">
+    <span class="tag t2">Perbedaan 2</span>
+    <h3>Belum pernah menilai proses sosial emosional</h3>
+    <div class="duo">
+      <div class="box then"><h4>Praktik saya</h4><p class="small">Penilaian berhenti di benar-salah dan
+      angka akhir. Murid yang aktif membantu temannya tidak terbaca sama sekali dalam nilai.</p></div>
+      <div class="box now"><h4>Materi perkuliahan</h4><p class="small">Ada rubrik observasi lima kompetensi
+      CASEL skala 1-4, lembar refleksi diri murid, penilaian diri, dan <i>peer review</i>.</p></div>
+    </div>
+    <p style="margin-top:.85em">Yang berbeda bukan hanya alatnya, tapi <span class="hl">apa yang dianggap
+    layak dinilai</span>. Kerja sama, empati, cara mengelola rasa frustrasi saat soal sulit, semua itu
+    ternyata bisa diamati dengan indikator yang jelas. Selama ini kemampuan tersebut saya anggap "bonus"
+    yang tidak ada urusannya dengan penilaian.</p>
+  </div>
+</div>
+
+<div class="panel" data-l="Beda 3" data-x="-26" data-y="10">
+  <div class="pad">
+    <span class="tag t2">Perbedaan 3</span>
+    <h3>Ternyata menghukum itu harus ada pendekatan restoratif</h3>
+    <div class="duo">
+      <div class="box then"><h4>Praktik saya</h4><p class="small">Salah → hukuman, sering di depan kelas
+      supaya jera dan supaya murid lain ikut takut mengulangi.</p></div>
+      <div class="box now"><h4>Materi perkuliahan</h4><p class="small">Konsekuensi tetap ada, tapi mendidik
+      dan tidak mempermalukan: cari akar masalahnya, bicara secara pribadi, beri ruang untuk mengakui
+      kesalahan dan memperbaikinya.</p></div>
+    </div>
+    <p style="margin-top:.85em">Ini perbedaan yang paling mengubah cara pandang saya. Hukuman di depan
+    kelas memang membuat murid diam, tapi yang tertanam bukan kesadaran, melainkan rasa malu dan label
+    dari teman-temannya. Sementara pendekatan restoratif menyasar
+    <span class="hl">pemulihan hubungan</span> dan tanggung jawab, sehingga hasilnya bertahan jauh lebih lama.</p>
+  </div>
+</div>
+
+<!-- ================= 03 CONCEPT ================= -->
+<div class="panel" data-l="Concept" data-mark="1" data-x="34">
+  <div class="marker"><div class="num">03</div><h2>Concept</h2>
+  <p>Konsep utama dan penting yang telah saya pelajari</p></div>
+</div>
+
+<div class="panel wide" data-l="CASEL" data-x="-18">
+  <div class="pad">
+    <span class="tag t1">Konsep 1</span>
+    <h3>Kerangka CASEL: lima kompetensi sosial emosional</h3>
+    <div class="caselgrid">
+      <div class="prismwrap">
+        <div class="prism">
+          <div class="pf p1"><b>1</b>Self-Awareness<span>Kesadaran Diri</span></div>
+          <div class="pf p2"><b>2</b>Self-Management<span>Pengelolaan Diri</span></div>
+          <div class="pf p3"><b>3</b>Social Awareness<span>Kesadaran Sosial</span></div>
+          <div class="pf p4"><b>4</b>Relationship Skills<span>Keterampilan Relasi</span></div>
+          <div class="pf p5"><b>5</b>Responsible Decision Making<span>Keputusan Bertanggung Jawab</span></div>
+        </div>
+      </div>
+      <div class="caslist">
+        <div class="casitem"><div class="n n1">1</div><div><h4>Kesadaran Diri</h4>
+          <p>Memahami emosi, pikiran, dan nilai yang memengaruhi perilaku di berbagai situasi.</p></div></div>
+        <div class="casitem"><div class="n n2">2</div><div><h4>Pengelolaan Diri</h4>
+          <p>Mengatur emosi, pikiran, dan perilaku secara efektif pada situasi yang berbeda.</p></div></div>
+        <div class="casitem"><div class="n n3">3</div><div><h4>Kesadaran Sosial</h4>
+          <p>Memahami perspektif orang lain dan berempati pada latar belakang yang berbeda.</p></div></div>
+        <div class="casitem"><div class="n n4">4</div><div><h4>Keterampilan Relasi</h4>
+          <p>Menjalin dan mempertahankan hubungan yang sehat dan efektif.</p></div></div>
+        <div class="casitem"><div class="n n5">5</div><div><h4>Keputusan Bertanggung Jawab</h4>
+          <p>Membuat pilihan yang tepat dan konstruktif pada situasi tertentu.</p></div></div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:.9em">Dikembangkan dari teori kecerdasan emosi
+    <b>Daniel Goleman</b> dan kecerdasan majemuk <b>Howard Gardner</b>. Sifatnya
+    <span class="hl">preventif</span> sekaligus <span class="hl">promotif</span>.</p>
+  </div>
+</div>
+
+<div class="panel" data-l="EMC²" data-x="26" data-y="-6">
+  <div class="pad">
+    <span class="tag t3">Konsep 2</span>
+    <h3>EMC²: kompetensi keteladanan guru</h3>
+    <p class="small">Kerangka dari UNESCO bersama Mahatma Gandhi Institute of Education. Empat kompetensi
+    ini perlu diasah guru agar pembelajaran berlangsung baik.</p>
+    <ul>
+      <li><b>Empathy</b>: memahami murid secara mendalam. Goleman membaginya menjadi empati kognitif,
+      empati emosional, dan empati penuh kepedulian.</li>
+      <li><b>Mindfulness</b>: sadar penuh atas pengalaman diri tanpa menghakimi. Tekniknya
+      <i>two feet one breath</i>, <i>set intentions</i>, dan teknik <i>"I am aware"</i>.</li>
+      <li><b>Compassion</b>: enam atribut Gilbert: sensitivity, sympathy, empathy, motivation/caring,
+      distress tolerance, non-judgement.</li>
+      <li><b>Critical inquiry</b>: memperoleh informasi lewat pengamatan, pengalaman, penalaran, dan
+      penilaian diri sebelum mengambil keputusan.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="panel" data-l="3 Prinsip" data-x="-30" data-y="8">
+  <div class="pad">
+    <span class="tag t4">Konsep 3</span>
+    <h3>Tiga hal yang wajib diingat guru</h3>
+    <div class="step"><div class="dot">1</div><div><h4>Caring relationship sebagai dasar belajar</h4>
+      <p class="small">Hubungan yang peduli membuat murid berani bertanya, mengemukakan pendapat, bahkan
+      mengekspresikan diri.</p></div></div>
+    <div class="step"><div class="dot">2</div><div><h4>Emosi memengaruhi suasana belajar</h4>
+      <p class="small">Murid yang belajar dalam lingkungan kelas yang menyenangkan cenderung lebih bisa
+      menikmati kelasnya dan menerima materi.</p></div></div>
+    <div class="step"><div class="dot">3</div><div><h4>Tujuan dan pemecahan masalah memberi arah</h4>
+      <p class="small">Guru dan murid yang paham tujuan pembelajaran akan lebih terarah dan merasakan
+      pembelajaran yang lebih bermakna.</p></div></div>
+    <p class="small" style="margin-top:.3em">Novick, Kress dan Elias (2002)</p>
+  </div>
+</div>
+
+<div class="panel" data-l="Penerapan" data-x="28" data-y="-8">
+  <div class="pad">
+    <span class="tag t5">Konsep 4</span>
+    <h3>Tiga cara PSE diterapkan dan cara mengevaluasinya</h3>
+    <ul>
+      <li><b>Rutin</b>: morning meeting, circle time, jurnal emosi harian.</li>
+      <li><b>Terintegrasi</b> dalam mata pelajaran dan bimbingan klasikal, berupa diskusi kasus, kerja kelompok,
+      role play.</li>
+      <li><b>Menjadi budaya sekolah</b>: menyelesaikan masalah dengan damai, menghargai pendapat,
+      program anti-perundungan, kemitraan dengan orang tua.</li>
+    </ul>
+    <p style="margin-top:.8em">Evaluasinya berjalan tiga lapis: <span class="hl">perencanaan</span>
+    (integrasi PSE dalam tujuan dan indikator RPP), <span class="hl">pelaksanaan</span> (praktik dan
+    rekaman video), dan <span class="hl">refleksi diri</span> (jurnal guru). Masing-masing dengan
+    rubrik penilaiannya sendiri.</p>
+  </div>
+</div>
+
+<div class="panel" data-l="Kenapa penting" data-x="-24" data-y="6">
+  <div class="pad">
+    <span class="tag t1">Konsep 5</span>
+    <h3>Empat alasan guru wajib menguasai PSE</h3>
+    <div class="duo">
+      <div class="box"><h4>Kesejahteraan guru</h4><p class="small">Guru yang mampu mengelola emosi lebih
+      tahan menghadapi tekanan dan situasi sulit.</p></div>
+      <div class="box"><h4>Manajemen kelas</h4><p class="small">Relasi guru dengan berbagai pihak membaik
+      dan iklim kelas menjadi lebih kondusif.</p></div>
+      <div class="box"><h4>Modeling</h4><p class="small">Cara guru menghadapi stimulus dan mengelola
+      konflik menjadi pelajaran langsung bagi murid.</p></div>
+      <div class="box"><h4>Keterampilan profesional</h4><p class="small">Komunikasi, empati, dan regulasi
+      emosi adalah fondasi relasi dengan murid, orang tua, dan rekan kerja.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 04 CHANGE ================= -->
+<div class="panel" data-l="Change" data-mark="1" data-x="-36">
+  <div class="marker"><div class="num">04</div><h2>Change</h2>
+  <p>Perubahan yang ingin saya lakukan</p></div>
+</div>
+
+<div class="panel" data-l="Ubah 1" data-x="30" data-y="8">
+  <div class="pad">
+    <span class="tag t5">Perubahan 1</span>
+    <h3>Mulai mengecek perasaan sebelum masuk materi</h3>
+    <p>Saya akan membuka pelajaran Matematika dengan <i>check-in</i> singkat 5-10 menit: satu kata
+    perasaan hari ini, lewat Padlet atau cukup kertas tempel bila internet terbatas.</p>
+    <p>Setelah terkumpul, saya tampilkan sebaran perasaan kelas dan menanggapinya sebentar. Kalau banyak
+    yang menulis "ngantuk" atau "pusing", saya sesuaikan cara membuka materi. Kalau ada satu-dua murid
+    yang perasaannya jauh berbeda dari kelas, itu jadi catatan untuk saya dekati secara pribadi.</p>
+    <p class="small">Tujuannya sederhana: saya tahu sedang mengajar kelas dengan kondisi seperti apa,
+    sehingga penanganannya bisa tepat, bukan menebak-nebak seperti sebelumnya.</p>
+  </div>
+</div>
+
+<div class="panel" data-l="Ubah 2" data-x="-30" data-y="-8">
+  <div class="pad">
+    <span class="tag t5">Perubahan 2</span>
+    <h3>Mulai menilai proses sosial emosional, bukan hanya hasil</h3>
+    <p>Setiap modul ajar yang saya buat akan memuat <span class="hl">dua kolom tujuan</span>: tujuan
+    akademik dan tujuan sosial emosional. Keduanya ditulis eksplisit supaya tidak hilang saat
+    pelaksanaan.</p>
+    <p>Untuk menilainya saya memakai rubrik observasi lima kompetensi CASEL skala 1-4 selama kerja
+    kelompok, ditambah lembar refleksi diri murid di akhir pembelajaran. Apresiasi saya berikan pada
+    kelompok yang saling membantu, bukan hanya yang paling cepat selesai.</p>
+    <p class="small">Konsekuensinya saya harus lebih banyak berkeliling dan mengamati, bukan berdiri di
+    depan sepanjang jam pelajaran.</p>
+  </div>
+</div>
+
+<div class="panel" data-l="Ubah 3" data-x="26" data-y="10">
+  <div class="pad">
+    <span class="tag t5">Perubahan 3</span>
+    <h3>Mengganti hukuman dengan pendekatan restoratif</h3>
+    <p>Prinsip yang saya pegang: <span class="hl">menegur secara privat, menghargai secara publik</span>.
+    Saya akan mencari akar masalahnya lebih dulu, bertanya alasan di balik perilakunya, lalu memberi
+    murid ruang untuk mengakui kesalahan, meminta maaf, dan memperbaikinya.</p>
+    <p>Konsekuensi tetap ada, tapi diarahkan untuk memulihkan hubungan, bukan mempermalukan. Termasuk
+    menahan diri sendiri: tiga tarikan napas dulu sebelum merespons, baru bicara dengan bahasa asertif
+    seperti "Saya sulit menjelaskan kalau kalian ribut, mari kita fokus bersama."</p>
+    <p class="small">Saya juga ingin membuat kesepakatan kelas bersama murid di pertemuan pertama, supaya
+    aturan terasa milik bersama dan ada rujukan yang adil saat terjadi pelanggaran.</p>
+  </div>
+</div>
+
+<!-- ================= ARTEFAK ================= -->
+<div class="panel" data-l="Artefak" data-mark="1" data-x="34">
+  <div class="marker"><div class="num">05</div><h2>Analisis Artefak</h2>
+  <p>Bukti dukung hasil refleksi</p></div>
+</div>
+
+<div class="panel wide" data-l="Artefak apa" data-x="-26">
+  <div class="pad">
+    <span class="tag t2">Pertanyaan 1</span>
+    <h3>Artefak yang saya jadikan bukti dukung</h3>
+    <p style="font-size:1.15em;color:#fff;font-weight:700;margin-top:.15em">
+      1E. Refleksi dan Evaluasi PSE, SMKN 1 Salatiga</p>
+    <p>Lembar kerja evaluasi integratif PSE beserta rekaman video praktik <i>micro teaching</i>
+    pembelajaran Matematika berbasis PSE. Isinya terdiri atas dua bagian besar:</p>
+    <div class="duo" style="margin-top:.8em">
+      <div class="box"><h4>Bagian 1 · Lembar penilaian</h4><p class="small">
+        Tiga tabel evaluasi: <b>perencanaan</b> (integrasi SEL dalam tujuan dan indikator, kesesuaian
+        strategi, keterpaduan kegiatan, kejelasan asesmen), <b>pelaksanaan</b> (penguasaan materi,
+        penerapan kompetensi SEL, interaksi dengan murid, pengelolaan kelas), dan
+        <b>refleksi diri</b> (kesadaran diri, regulasi emosi, kesadaran sosial, rencana perbaikan).</p></div>
+      <div class="box"><h4>Bagian 2 · Umpan balik dan kajian</h4><p class="small">
+        Ringkasan kelebihan pelaksanaan, evaluasi berbasis rubrik lima kompetensi CASEL beserta capaian
+        praktiknya, serta catatan perbaikan dari guru pamong/fasilitator.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="panel" data-l="Mengapa" data-x="28" data-y="-6">
+  <div class="pad">
+    <span class="tag t3">Pertanyaan 2</span>
+    <h3>Mengapa artefak ini yang saya pilih?</h3>
+    <p>Karena inilah satu-satunya artefak yang menunjukkan saya
+    <span class="hl">benar-benar mempraktikkan</span> materi kuliah, bukan sekadar merencanakannya di
+    atas kertas. Artefak lain berhenti pada rancangan, sedangkan yang ini merekam perilaku nyata di depan kelas
+    sekaligus menilainya.</p>
+    <p>Alasan kedua, ketiga perubahan yang saya sebut di bagian Change, yaitu mengecek perasaan, menilai
+    proses sosial emosional, dan menangani murid tanpa menghukum, semuanya terwakili di dalam satu
+    dokumen yang sama. Jadi satu artefak ini sudah cukup mewakili seluruh refleksi saya.</p>
+    <p>Alasan ketiga, artefak ini bersifat <span class="hl">evaluatif</span>. Bukan hanya bercerita apa
+    yang saya lakukan, tetapi juga menilai seberapa baik hal itu dilakukan dan apa yang masih perlu
+    diperbaiki, sesuai kerangka evaluasi PSE tiga lapis.</p>
+  </div>
+</div>
+
+<div class="panel wide" data-l="Bagian" data-x="-24" data-y="8">
+  <div class="pad">
+    <span class="tag t4">Pertanyaan 3</span>
+    <h3>Bagian mana dari artefak ini yang mendukung refleksi saya?</h3>
+    <div class="step"><div class="dot c">1</div><div><h4>Tabel evaluasi pelaksanaan</h4>
+      <p class="small">Memuat catatan bahwa guru mengawali kelas dengan menyapa dan mengecek kondisi
+      emosional siswa sebelum masuk materi, serta membangun interaksi yang ramah dan tidak menghakimi.
+      → mendukung <b>Perubahan 1</b>.</p></div></div>
+    <div class="step"><div class="dot p">2</div><div><h4>Tabel evaluasi perencanaan</h4>
+      <p class="small">Mencatat bahwa RPP memisahkan tujuan akademik dan tujuan sosial emosional secara
+      eksplisit, memuat lima kompetensi CASEL, serta menyediakan empat jenis asesmen, termasuk rubrik
+      observasi PSE skala 1-4 dan lembar refleksi diri siswa. → mendukung <b>Perubahan 2</b>.</p></div></div>
+    <div class="step"><div class="dot y">3</div><div><h4>Tabel evaluasi refleksi diri</h4>
+      <p class="small">Berisi catatan kemampuan tetap tenang saat menghadapi hambatan di kelas,
+      penanganan siswa yang lupa membawa buku secara bijak dan solutif, serta pengingat mengenai etika
+      menyanggah pendapat teman agar tidak mengecilkan hati. → mendukung <b>Perubahan 3</b>.</p></div></div>
+    <div class="step"><div class="dot g">4</div><div><h4>Umpan balik guru pamong</h4>
+      <p class="small">Menyoroti penekanan <i>growth mindset</i> bahwa kesalahan adalah bagian dari proses
+      belajar, yang dinilai berhasil menurunkan resistensi emosional siswa terhadap Matematika, serta
+      kegiatan saling mengapresiasi di akhir kerja kelompok. → mendukung <b>Connection</b>: memahami
+      murid dan memberi penanganan yang tepat.</p></div></div>
+  </div>
+</div>
+
+<!-- ================= TOPIK 3 ================= -->
+<div class="panel" data-l="Topik 3" data-mark="1" data-x="-34">
+  <div class="marker"><div class="num">06</div><h2>Topik 3</h2>
+  <p>Experiential Learning untuk Pembelajaran Sosial Emosional</p></div>
+</div>
+
+<div class="panel" data-l="Definisi" data-x="26">
+  <div class="pad">
+    <span class="tag t2">Pengantar</span>
+    <h3>Apa itu Experiential Learning?</h3>
+    <p><b>Experiential learning</b> atau pembelajaran berbasis pengalaman adalah proses memperoleh
+    pengetahuan melalui <span class="hl">pengalaman langsung yang kemudian direfleksikan</span>.
+    Intinya bukan sekadar "belajar sambil melakukan", melainkan <i>melakukan → merenungkan → memahami →
+    mencoba lagi</i>.</p>
+    <p>Perbedaannya dengan praktikum biasa terletak pada tahap refleksi. Sebuah kegiatan baru disebut
+    experiential learning apabila murid diajak memaknai apa yang baru dialami dan menghubungkannya
+    dengan konsep. Tanpa refleksi, praktik hanya berhenti sebagai aktivitas.</p>
+    <p>Dalam pendekatan ini guru berubah peran: dari sumber utama informasi menjadi
+    <span class="hl">fasilitator dan perancang pengalaman belajar</span> yang mendorong kreativitas serta
+    membangun konstruksi pengetahuan murid.</p>
+  </div>
+</div>
+
+<div class="panel wide" data-l="Tokoh" data-x="-28" data-y="-6">
+  <div class="pad">
+    <span class="tag t3">Tokoh</span>
+    <h3>Para tokoh di balik Experiential Learning</h3>
+    <p class="small">Kolb menyebut tiga nama berikut sebagai fondasi teorinya, yaitu para pemikir yang
+    menempatkan pengalaman di pusat proses belajar.</p>
+    <div class="step"><div class="dot c">JD</div><div><h4>John Dewey (1859-1952)</h4>
+      <p class="small">Filsuf pendidikan Amerika, tokoh progresivisme, dikenal lewat gagasan
+      <i>learning by doing</i>. Dalam <i>Experience and Education</i> (1938) ia menegaskan bahwa tidak
+      semua pengalaman mendidik, karena pengalaman baru bernilai bila berkelanjutan dan melibatkan interaksi
+      dengan lingkungan.</p></div></div>
+    <div class="step"><div class="dot p">KL</div><div><h4>Kurt Lewin (1890-1947)</h4>
+      <p class="small">Psikolog sosial, pelopor <i>action research</i> dan dinamika kelompok. Ia
+      memperkenalkan siklus belajar yang berputar antara tindakan dan umpan balik. Kalimatnya yang
+      terkenal: <i>"Tidak ada yang lebih praktis daripada teori yang baik."</i></p></div></div>
+    <div class="step"><div class="dot y">JP</div><div><h4>Jean Piaget (1896-1980)</h4>
+      <p class="small">Psikolog perkembangan asal Swiss. Menjelaskan bahwa pengetahuan dibangun melalui
+      <i>asimilasi</i> (menyerap informasi baru ke skema lama) dan <i>akomodasi</i> (mengubah skema karena
+      informasi baru), yang menjadi dasar pandangan konstruktivis dalam siklus Kolb.</p></div></div>
+    <div class="step"><div class="dot g">DK</div><div><h4>David A. Kolb (lahir 1939)</h4>
+      <p class="small">Teoretikus pendidikan Amerika. Pada 1984 menerbitkan
+      <i>Experiential Learning: Experience as the Source of Learning and Development</i> yang merumuskan
+      siklus empat tahap dan menjadi rujukan utama materi Topik 3.</p></div></div>
+  </div>
+</div>
+
+<div class="panel" data-l="6 Proposisi" data-x="30" data-y="8">
+  <div class="pad">
+    <span class="tag t4">Materi</span>
+    <h3>Enam proposisi Kolb tentang belajar</h3>
+    <ul>
+      <li>Belajar bukan hanya soal hasil akhir, sehingga guru perlu berfokus pada <b>proses</b> dan memberi umpan
+      balik agar murid menikmati prosesnya.</li>
+      <li>Belajar adalah proses <b>re-learning</b>, sehingga guru dapat melihat ide dan pemahaman awal murid, lalu
+      membantu menyempurnakannya.</li>
+      <li>Belajar adalah proses <b>adaptasi dan penyelesaian konflik</b>, karena perbedaan pendapat mendorong
+      murid mempelajari hal baru.</li>
+      <li>Belajar bersifat <b>menyeluruh</b>, yaitu melibatkan kognisi, emosi, persepsi, dan perilaku
+      sekaligus.</li>
+      <li>Belajar adalah <b>transaksi sinergis</b> antara individu dan lingkungannya.</li>
+      <li>Belajar dapat ditempuh dengan <b>berbagai cara</b>, salah satunya experiential learning.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="panel wide" data-l="Siklus Kolb" data-x="-24">
+  <div class="pad">
+    <span class="tag t2">Materi inti</span>
+    <h3>Siklus empat tahap Kolb (1984)</h3>
+    <div class="step"><div class="dot c">1</div><div><h4>Concrete Experience (Pengalaman Nyata)</h4>
+      <p class="small">Murid mengalami langsung suatu peristiwa atau aktivitas, melibatkan indra dan emosi,
+      bukan hanya teori. <b>Peran guru:</b> menyiapkan pengalaman yang aman, relevan, dan cukup menantang
+      untuk memancing rasa ingin tahu.</p></div></div>
+    <div class="step"><div class="dot p">2</div><div><h4>Reflective Observation (Observasi Refleksi)</h4>
+      <p class="small">Murid memaknai apa yang baru dialami: apa yang terjadi, apa tantangannya, berhasil
+      atau tidak, dan mengapa. <b>Peran guru:</b> memandu dengan pertanyaan terbuka, bukan langsung
+      memberi jawaban.</p></div></div>
+    <div class="step"><div class="dot y">3</div><div><h4>Abstract Conceptualization (Konseptualisasi)</h4>
+      <p class="small">Refleksi dihubungkan dengan teori. Murid menyusun pemahaman baru atau memperbaiki
+      pengetahuan lamanya. <b>Peran guru:</b> memberi nama ilmiah pada apa yang sudah dialami murid.</p></div></div>
+    <div class="step"><div class="dot g">4</div><div><h4>Active Experimentation (Eksperimen Aktif)</h4>
+      <p class="small">Konsep diuji pada situasi baru, misalnya lewat proyek mini. <b>Peran guru:</b>
+      memberi ruang mencoba, termasuk ruang untuk gagal dengan aman.</p></div></div>
+  </div>
+</div>
+
+<div class="panel wide" data-l="Gaya belajar" data-x="28" data-y="-8">
+  <div class="pad">
+    <span class="tag t3">Pengayaan</span>
+    <h3>Empat gaya belajar menurut Kolb</h3>
+    <p class="small">Dari siklusnya, Kolb menurunkan empat kecenderungan gaya belajar. Berguna untuk
+    memahami mengapa murid merespons kegiatan yang sama secara berbeda.</p>
+    <table>
+      <thead><tr><th>Gaya</th><th>Kekuatan</th><th>Cocok dengan</th></tr></thead>
+      <tbody>
+        <tr><td><b>Diverging</b></td><td>Mengamati dan melihat banyak sudut pandang, imajinatif dan peka
+          perasaan</td><td>Diskusi terbuka, curah gagasan</td></tr>
+        <tr><td><b>Assimilating</b></td><td>Menyusun teori dan konsep yang rapi dan logis</td>
+          <td>Penjelasan konsep, membaca, model</td></tr>
+        <tr><td><b>Converging</b></td><td>Menerapkan konsep untuk memecahkan masalah praktis</td>
+          <td>Latihan soal, studi terapan</td></tr>
+        <tr><td><b>Accommodating</b></td><td>Belajar dari mencoba langsung, berani ambil risiko</td>
+          <td>Praktik, proyek, eksperimen</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="panel wide" data-l="EL + PSE" data-x="-26" data-y="8">
+  <div class="pad">
+    <span class="tag t5">Integrasi</span>
+    <h3>Mengapa Experiential Learning cocok untuk PSE</h3>
+    <p class="small">Setiap tahap siklus Kolb membuka ruang bagi satu kompetensi CASEL.</p>
+    <table>
+      <thead><tr><th>Tahap Kolb</th><th>Kompetensi PSE</th><th>Contoh aktivitas</th></tr></thead>
+      <tbody>
+        <tr><td>Concrete Experience</td><td>Kesadaran diri, pengelolaan emosi</td>
+          <td>Simulasi kerja kelompok, role-play empati, permainan kerja sama</td></tr>
+        <tr><td>Reflective Observation</td><td>Kesadaran diri dan empati</td>
+          <td>Diskusi "bagaimana perasaanmu saat bekerja sama?", jurnal emosi, sharing circle</td></tr>
+        <tr><td>Abstract Conceptualization</td><td>Kesadaran sosial, nilai bersama</td>
+          <td>Mindmap nilai kerja sama, membahas "mengapa empati penting?"</td></tr>
+        <tr><td>Active Experimentation</td><td>Keterampilan relasi, keputusan bertanggung jawab</td>
+          <td>Merancang proyek kelompok atau kegiatan sosial bersama</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:.75em">Kesimpulannya, experiential learning menjadi <span class="hl">sarana
+    praktis</span> penerapan PSE karena prosesnya menuntut keterlibatan emosi, interaksi sosial, refleksi
+    diri, dan pengambilan keputusan.</p>
+  </div>
+</div>
+
+<div class="panel wide" data-l="Cara menerapkan" data-x="30" data-y="-6">
+  <div class="pad">
+    <span class="tag t4">Penerapan di kelas</span>
+    <h3>Langkah praktis merancangnya</h3>
+    <div class="duo">
+      <div class="box"><h4>1 · Tentukan pengalaman</h4><p class="small">Pilih aktivitas yang bisa
+      benar-benar dialami murid: percobaan, simulasi, permainan, pengamatan lapangan, atau pengolahan
+      data nyata di sekitar mereka.</p></div>
+      <div class="box"><h4>2 · Siapkan pertanyaan refleksi</h4><p class="small">Susun pertanyaan pemandu
+      sejak awal, misalnya apa yang terjadi, apa yang kamu rasakan, apa yang sulit, mengapa bisa begitu.</p></div>
+      <div class="box"><h4>3 · Jembatani ke konsep</h4><p class="small">Setelah refleksi, baru berikan
+      istilah dan teorinya. Minta murid membuat diagram, ringkasan, atau peta konsep sendiri.</p></div>
+      <div class="box"><h4>4 · Beri ruang mencoba lagi</h4><p class="small">Tutup dengan proyek mini atau
+      penerapan pada konteks berbeda, lalu minta laporan singkat dan presentasi.</p></div>
+    </div>
+    <p style="margin-top:.9em">Strategi pendukung: kegiatan yang menstimulasi emosi dan interaksi (drama,
+    pentas seni, class meeting), ruang refleksi berupa <i>journaling</i> atau forum diskusi, menjelaskan
+    secara terbuka kompetensi apa yang sedang dilatih, serta penilaian formatif seperti observasi
+    perilaku, penilaian diri, dan <i>peer review</i>.</p>
+  </div>
+</div>
+
+<div class="panel" data-l="Penilaian" data-x="-22" data-y="8">
+  <div class="pad">
+    <span class="tag t1">Penilaian</span>
+    <h3>Menilai pembelajaran berbasis pengalaman</h3>
+    <p>Penilaiannya dibagi dua agar tidak hanya menghargai produk akhir:</p>
+    <ul>
+      <li><b>Penilaian proses</b>: observasi keaktifan murid selama percobaan dan diskusi. Indikator skor
+      tertinggi misalnya: terlibat aktif, berkontribusi pada kelompok, memberikan ide baru, dan aktif
+      membantu penyelesaian.</li>
+      <li><b>Penilaian produk</b>: laporan percobaan, diagram atau model, serta hasil proyek. Dinilai dari
+      kebenaran penjelasan, kelengkapan, kemenarikan, kreativitas, dan orisinalitas.</li>
+    </ul>
+    <p style="margin-top:.75em">Keduanya dituangkan dalam rubrik skala 1-4 dan dilengkapi lembar refleksi
+    diri murid untuk menangkap sisi sosial emosionalnya.</p>
+  </div>
+</div>
+
+<!-- ================= CLOSING ================= -->
+<div class="panel" data-l="Penutup" data-mark="1">
+  <div style="text-align:center">
+    <h1 style="font-size:2.2em">Terima kasih</h1>
+    <p class="small" style="margin-top:1em">Refleksi Pengalaman Belajar, Pembelajaran Sosial Emosional<br>
+    Awang Haris Prasetyo Adhi · 95202581O · 35741 Matematika</p>
+  </div>
+</div>
+
+</div></div>
+
+<div id="vignette"></div>
+<div id="bar"></div>
+<div id="dots"></div>
+
+<button class="hudbtn wide2" id="menubtn" title="Daftar Isi (tombol M)">☰ <span>Daftar Isi</span></button>
+<button class="hudbtn wide2" id="modebtn" title="Ganti tampilan 3D / Biasa">◧ <span id="modelbl">Mode 3D</span></button>
+
+<div id="zoombox">
+  <span class="lbl">Ukuran</span>
+  <button class="zbtn" id="zminus" title="Perkecil">−</button>
+  <div id="grip" title="Tarik ke kanan / kiri untuk memperbesar teks">
+    <span class="bars"><i></i><i></i><i></i></span><span id="zval">118%</span>
+  </div>
+  <button class="zbtn" id="zplus" title="Perbesar">+</button>
+</div>
+
+<div id="navpad">
+  <div id="counter">01 / 01</div>
+  <button class="hudbtn" id="prev" title="Sebelumnya (←)">↑</button>
+  <button class="hudbtn" id="next" title="Berikutnya (→)">↓</button>
+</div>
+
+<div id="menu">
+  <button class="hudbtn" id="menuclose" title="Tutup (Esc)">✕</button>
+  <div id="menuin"><h3>Daftar Isi</h3><div class="mgrid" id="mlist"></div></div>
+</div>
+
+<div id="cue"><p>Gulir untuk terbang</p><div class="mouse"></div></div>
+
+<script>
+(function(){
+var FLAT=false;
+const world=document.getElementById('world');
+const panels=[...document.querySelectorAll('.panel')];
+const N=panels.length;
+const DEPTH=1200;
+let STEP=Math.max(480,innerHeight*0.9);
+
+/* ---------- ukuran teks (drag) ---------- */
+const root=document.documentElement;
+let ui=parseFloat(localStorage.getItem('pse_ui')||'1.18');
+const zval=document.getElementById('zval');
+function setUI(v){
+  ui=Math.max(0.85,Math.min(1.75,v));
+  root.style.setProperty('--ui',ui.toFixed(3));
+  zval.textContent=Math.round(ui*100)+'%';
+  localStorage.setItem('pse_ui',ui.toFixed(3));
+  requestAnimationFrame(measure);
+}
+document.getElementById('zplus').onclick=()=>setUI(ui+0.06);
+document.getElementById('zminus').onclick=()=>setUI(ui-0.06);
+const grip=document.getElementById('grip');
+let dragging=false,dx0=0,ui0=1;
+grip.addEventListener('pointerdown',e=>{
+  dragging=true;dx0=e.clientX;ui0=ui;grip.classList.add('drag');grip.setPointerCapture(e.pointerId);
+});
+grip.addEventListener('pointermove',e=>{
+  if(!dragging)return;
+  setUI(ui0+(e.clientX-dx0)*0.0035);
+});
+const endDrag=()=>{dragging=false;grip.classList.remove('drag');};
+grip.addEventListener('pointerup',endDrag);
+grip.addEventListener('pointercancel',endDrag);
+setUI(ui);
+
+/* ---------- layout & fit ---------- */
+function layout(){
+  STEP=Math.max(480,innerHeight*0.9);
+  if(typeof FLAT!=='undefined' && FLAT){ measure(); return; }
+  document.getElementById('spacer').style.height=((N-1)*STEP+innerHeight)+'px';
+  panels.forEach((p,i)=>{
+    p._z=-i*DEPTH;
+    p._x=(parseFloat(p.dataset.x)||0)*0.01;
+    p._y=(parseFloat(p.dataset.y)||0)*0.01;
+  });
+  measure();
+}
+function measure(){
+  if(typeof FLAT!=='undefined' && FLAT){ for(const p of panels) p._fit=1; return; }
+  const lim=innerHeight*0.88;
+  for(const p of panels){
+    const h=p.offsetHeight||1;
+    p._fit=Math.min(1,lim/h);
+  }
+}
+layout();
+addEventListener('resize',()=>{layout();sizeSky();});
+
+/* ---------- navigasi ---------- */
+const marks=panels.map((p,i)=>({i,l:p.dataset.l||('Panel '+(i+1)),mark:!!p.dataset.mark}));
+const dots=document.getElementById('dots');
+marks.filter(m=>m.mark).forEach(m=>{
+  const b=document.createElement('button');
+  b.dataset.l=m.l;b.dataset.i=m.i;
+  b.onclick=()=>go(m.i);
+  dots.appendChild(b);
+});
+const dotBtns=[...dots.children];
+
+const mlist=document.getElementById('mlist');
+marks.forEach(m=>{
+  const b=document.createElement('button');
+  b.innerHTML='<span class="mi">'+String(m.i+1).padStart(2,'0')+'</span><span class="mt">'+m.l+'</span>';
+  b.onclick=()=>{closeMenu();go(m.i);};
+  mlist.appendChild(b);
+});
+const menu=document.getElementById('menu');
+const openMenu=()=>menu.classList.add('on');
+const closeMenu=()=>menu.classList.remove('on');
+document.getElementById('menubtn').onclick=openMenu;
+document.getElementById('menuclose').onclick=closeMenu;
+menu.addEventListener('click',e=>{if(e.target===menu)closeMenu();});
+
+function go(i){
+  i=Math.max(0,Math.min(N-1,i));
+  if(FLAT){
+    const r=panels[i].getBoundingClientRect();
+    scrollTo({top:scrollY+r.top-Math.max(20,(innerHeight-r.height)/2),behavior:'smooth'});
+  }else{
+    scrollTo({top:i*STEP,behavior:'smooth'});
+  }
+}
+function current(){
+  if(FLAT){
+    let best=0,bd=1e9;
+    for(let i=0;i<N;i++){
+      const r=panels[i].getBoundingClientRect();
+      const d=Math.abs(r.top+r.height/2-innerHeight/2);
+      if(d<bd){bd=d;best=i;}
+    }
+    return best;
+  }
+  return Math.round(scrollY/STEP);
+}
+document.getElementById('prev').onclick=()=>go(current()-1);
+document.getElementById('next').onclick=()=>go(current()+1);
+addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeMenu();
+  else if(e.key==='m'||e.key==='M')menu.classList.toggle('on');
+  else if(['ArrowDown','ArrowRight','PageDown'].includes(e.key)){e.preventDefault();go(current()+1);}
+  else if(['ArrowUp','ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(current()-1);}
+  else if(e.key==='Home'){e.preventDefault();go(0);}
+  else if(e.key==='End'){e.preventDefault();go(N-1);}
+});
+
+/* ---------- mode tampilan: 3D atau datar ---------- */
+FLAT = localStorage.getItem('pse_flat')==='1';
+const modebtn=document.getElementById('modebtn');
+const modelbl=document.getElementById('modelbl');
+function applyMode(){
+  document.body.classList.toggle('flat',FLAT);
+  modelbl.textContent = FLAT ? 'Mode Biasa' : 'Mode 3D';
+  modebtn.title = FLAT ? 'Sedang mode biasa, klik untuk kembali ke 3D'
+                       : 'Sedang mode 3D, klik untuk tampilan biasa';
+  if(FLAT){
+    for(const p of panels){
+      p.style.transform=''; p.style.opacity=''; p.style.visibility=''; p._vis=null;
+    }
+  }else{
+    layout();
+  }
+  localStorage.setItem('pse_flat',FLAT?'1':'0');
+  requestAnimationFrame(measure);
+}
+modebtn.onclick=()=>{ const i=current(); FLAT=!FLAT; applyMode(); setTimeout(()=>go(i),60); };
+
+function flatFrame(){
+  const doc=document.documentElement;
+  const max=Math.max(1,doc.scrollHeight-innerHeight);
+  bar.style.width=Math.min(100,(scrollY/max)*100)+'%';
+  counter.textContent=String(current()+1).padStart(2,'0')+' / '+String(N).padStart(2,'0');
+  drawSky();
+}
+
+/* ---------- starfield (pelan, ikut guliran) ---------- */
+const sky=document.getElementById('sky'),g=sky.getContext('2d');
+let W,H,SF=[];
+function newStar(z){return {x:(Math.random()-.5)*2600,y:(Math.random()-.5)*2000,z:z,
+  c:['#ffffff','#a5f3fc','#c7b8ff','#fbcfe8','#a7f3d0'][Math.floor(Math.random()*5)]};}
+function sizeSky(){
+  W=sky.width=innerWidth;H=sky.height=innerHeight;
+  SF=Array.from({length:Math.min(320,Math.round(W*H/7000))},()=>newStar(Math.random()*1800+60));
+}
+sizeSky();
+
+let target=0,cam=0,vel=0,mx=0,my=0,tmx=0,tmy=0;
+addEventListener('pointermove',e=>{tmx=(e.clientX/innerWidth-.5);tmy=(e.clientY/innerHeight-.5);},{passive:true});
+
+const bar=document.getElementById('bar'),cue=document.getElementById('cue');
+const counter=document.getElementById('counter'), glow=document.querySelector('.glow');
+
+function tick(){
+  if(FLAT){ flatFrame(); requestAnimationFrame(tick); return; }
+  const maxScroll=(N-1)*STEP;
+  target=Math.max(0,Math.min(scrollY,maxScroll));
+  const prev=cam;
+  cam+=(target-cam)*0.085;
+  vel=cam-prev;
+  const prog=cam/Math.max(1,maxScroll);
+
+  bar.style.width=(prog*100)+'%';
+  cue.style.opacity=cam>40?0:1;
+
+  mx+=(tmx-mx)*0.06; my+=(tmy-my)*0.06;
+  const camZ=cam/STEP*DEPTH;
+  const yaw=Math.sin(prog*Math.PI*3.2)*3.0 - mx*5.0;
+  const pitch=Math.cos(prog*Math.PI*2.4)*1.8 + my*3.8;
+  const roll=Math.sin(prog*Math.PI*4.1)*1.4 + vel*0.010;
+  world.style.transform=`rotateZ(${roll}deg) rotateX(${pitch}deg) rotateY(${yaw}deg) translateZ(${camZ}px)`;
+
+  const vw=innerWidth,vh=innerHeight;
+  for(let i=0;i<N;i++){
+    const p=panels[i];
+    const zr=p._z+camZ;
+    let o;
+    if(zr<-2.30*DEPTH||zr>0.46*DEPTH) o=0;
+    else if(zr<-0.95*DEPTH)  o=(zr+2.30*DEPTH)/(1.35*DEPTH);
+    else if(zr>0.10*DEPTH)   o=1-(zr-0.10*DEPTH)/(0.36*DEPTH);
+    else                     o=1;
+    o=Math.max(0,Math.min(1,o));
+    const vis=o>0.008;
+    if(p._vis!==vis){ p.style.visibility=vis?'visible':'hidden'; p._vis=vis; }
+    p.style.opacity=o.toFixed(3);
+    if(!vis) continue;
+    const fit=p._fit||1;
+    p.style.transform=
+      `translate(-50%,-50%) translate3d(${p._x*vw}px,${p._y*vh}px,${p._z}px) `+
+      `rotateY(${-p._x*16}deg) rotateX(${p._y*12}deg) scale(${fit})`;
+  }
+
+  const cur=Math.round(cam/STEP);
+  counter.textContent=String(Math.min(N,cur+1)).padStart(2,'0')+' / '+String(N).padStart(2,'0');
+  let best=null;
+  dotBtns.forEach(b=>{const i=+b.dataset.i; if(i<=cur+0.5) best=b; b.classList.remove('on');});
+  if(best) best.classList.add('on');
+
+  glow.style.transform=`translate3d(${-mx*40}px,${-my*40-prog*60}px,0) scale(1.08)`;
+  drawSky();
+  requestAnimationFrame(tick);
+}
+
+function drawSky(){
+  g.clearRect(0,0,W,H);
+  const speed=0.85+Math.min(9,Math.abs(vel)*1.5);   // pelan saat diam, ikut cepat saat digulir
+  const cxp=W/2-mx*70, cyp=H/2-my*70;
+  const streak=Math.abs(vel)>3.5;
+  for(const s of SF){
+    s.z-=speed;
+    if(s.z<20){const ns=newStar(1800);s.x=ns.x;s.y=ns.y;s.z=1800;s.c=ns.c;}
+    const k=520/s.z, x=cxp+s.x*k, y=cyp+s.y*k;
+    if(x<-40||x>W+40||y<-40||y>H+40) continue;
+    const r=Math.max(.3,(1-s.z/1800)*1.9), a=Math.min(1,(1-s.z/1800)*1.1);
+    g.fillStyle=s.c;
+    if(streak){
+      const pk=520/(s.z+speed*2.0);
+      g.strokeStyle=s.c;g.lineWidth=r*.9;g.globalAlpha=a*.38;
+      g.beginPath();g.moveTo(x,y);g.lineTo(cxp+s.x*pk,cyp+s.y*pk);g.stroke();
+    }
+    g.globalAlpha=a*.7;
+    g.beginPath();g.arc(x,y,r,0,6.283);g.fill();
+  }
+  g.globalAlpha=1;
+}
+
+/* ---------- cincin terowongan ---------- */
+const frag=document.createDocumentFragment();
+for(let i=0;i<Math.ceil(N*0.9);i++){
+  const r=document.createElement('div');
+  r.className='ring'+(i%2?' alt':'');
+  const z=-i*(DEPTH*1.1);
+  r.style.transform=`translateZ(${z}px) rotateZ(${(i%2?1:-1)*1.6}deg)`;
+  r.style.opacity='0'; r._z=z; frag.appendChild(r);
+}
+world.appendChild(frag);
+const rings=[...document.querySelectorAll('.ring')];
+(function ringLoop(){
+  const camZ=cam/STEP*DEPTH;
+  for(const r of rings){
+    const zr=r._z+camZ; let o=0;
+    if(zr>-2.6*DEPTH&&zr<0.35*DEPTH){
+      o= zr<-1.2*DEPTH ? (zr+2.6*DEPTH)/(1.4*DEPTH)*0.34
+        : (zr>0 ? Math.max(0,0.34*(1-zr/(0.35*DEPTH))) : 0.34);
+    }
+    r.style.opacity=o.toFixed(3);
+  }
+  requestAnimationFrame(ringLoop);
+})();
+
+applyMode();
+setTimeout(measure,400);
+addEventListener('load',()=>setTimeout(measure,250));
+addEventListener('scroll',()=>{ if(FLAT) return; },{passive:true});
+requestAnimationFrame(tick);
+})();
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a345f326cdde6d09',t:'MTc4ODI4MzI3MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
