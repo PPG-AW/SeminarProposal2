@@ -137,6 +137,25 @@ tr:last-child td{border-bottom:0}
 .casitem p{font-size:.83em;color:var(--muted);line-height:1.5}
 
 
+
+/* ===== lapisan pembatas antar panel ===== */
+.gate{
+  position:absolute;left:50%;top:50%;width:250vmax;height:250vmax;margin:-125vmax 0 0 -125vmax;
+  pointer-events:none;visibility:hidden;
+}
+.gate i{
+  position:absolute;left:50%;top:50%;width:150vmin;height:98vmin;margin:-49vmin 0 0 -75vmin;
+  border-radius:30px;border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 0 90px rgba(0,0,0,.5) inset;
+}
+#tint{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(78% 60% at 50% 44%, rgba(var(--tint,124,92,255),.34), transparent 72%),
+    linear-gradient(180deg, rgba(var(--tint,124,92,255),.13), transparent 55%);
+}
+body.flat .gate{display:none}
+
 /* ===== pratinjau artefak ===== */
 .pvbar{display:flex;flex-wrap:wrap;gap:.5em;margin-top:1em}
 .pvbtn{
@@ -272,6 +291,7 @@ body.flat #dots{display:none}
 <div id="spacer"></div>
 <canvas id="sky"></canvas>
 <div class="glow"></div>
+<div id="tint"></div>
 
 <div id="stage"><div id="world">
 
@@ -288,12 +308,12 @@ body.flat #dots{display:none}
 </div>
 
 <!-- ================= 01 CONNECTION ================= -->
-<div class="panel" data-l="Connection" data-mark="1" data-x="-38">
+<div class="panel" data-l="Connection" data-mark="1">
   <div class="marker"><div class="num">01</div><h2>Connection</h2>
   <p>Keterkaitan materi dengan peran saya sebagai calon guru</p></div>
 </div>
 
-<div class="panel" data-l="Jawaban 1" data-x="28" data-y="-8">
+<div class="panel" data-l="Jawaban 1">
   <div class="pad">
     <span class="tag t1">Pertanyaan 1</span>
     <h3>Apa keterkaitan materi perkuliahan dengan peran saya sebagai calon guru?</h3>
@@ -310,7 +330,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel" data-l="Di Matematika" data-x="-30" data-y="8">
+<div class="panel" data-l="Di Matematika">
   <div class="pad">
     <span class="tag t1">Pertanyaan 1 · lanjutan</span>
     <h3>Kaitannya dengan mata pelajaran yang saya ampu</h3>
@@ -329,12 +349,12 @@ body.flat #dots{display:none}
 </div>
 
 <!-- ================= 02 CHALLENGE ================= -->
-<div class="panel" data-l="Challenge" data-mark="1" data-x="38">
+<div class="panel" data-l="Challenge" data-mark="1">
   <div class="marker"><div class="num">02</div><h2>Challenge</h2>
   <p>Materi yang berbeda dari praktik saya selama ini</p></div>
 </div>
 
-<div class="panel" data-l="Beda 1" data-x="-32" data-y="8">
+<div class="panel" data-l="Beda 1">
   <div class="pad">
     <span class="tag t2">Perbedaan 1</span>
     <h3>Dulu tidak pernah cek perasaan, langsung masuk materi</h3>
@@ -353,7 +373,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel" data-l="Beda 2" data-x="32" data-y="-8">
+<div class="panel" data-l="Beda 2">
   <div class="pad">
     <span class="tag t2">Perbedaan 2</span>
     <h3>Belum pernah menilai proses sosial emosional</h3>
@@ -370,7 +390,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel" data-l="Beda 3" data-x="-26" data-y="10">
+<div class="panel" data-l="Beda 3">
   <div class="pad">
     <span class="tag t2">Perbedaan 3</span>
     <h3>Ternyata menghukum itu harus ada pendekatan restoratif</h3>
@@ -389,12 +409,12 @@ body.flat #dots{display:none}
 </div>
 
 <!-- ================= 03 CONCEPT ================= -->
-<div class="panel" data-l="Concept" data-mark="1" data-x="34">
+<div class="panel" data-l="Concept" data-mark="1">
   <div class="marker"><div class="num">03</div><h2>Concept</h2>
   <p>Konsep utama dan penting yang telah saya pelajari</p></div>
 </div>
 
-<div class="panel wide" data-l="CASEL" data-x="-18">
+<div class="panel wide" data-l="CASEL">
   <div class="pad">
     <span class="tag t1">Konsep 1</span>
     <h3>Kerangka CASEL: lima kompetensi sosial emosional</h3>
@@ -427,7 +447,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel" data-l="EMC²" data-x="26" data-y="-6">
+<div class="panel" data-l="EMC²">
   <div class="pad">
     <span class="tag t3">Konsep 2</span>
     <h3>EMC²: kompetensi keteladanan guru</h3>
@@ -446,7 +466,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel" data-l="3 Prinsip" data-x="-30" data-y="8">
+<div class="panel" data-l="3 Prinsip">
   <div class="pad">
     <span class="tag t4">Konsep 3</span>
     <h3>Tiga hal yang wajib diingat guru</h3>
@@ -463,7 +483,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel" data-l="Penerapan" data-x="28" data-y="-8">
+<div class="panel" data-l="Penerapan">
   <div class="pad">
     <span class="tag t5">Konsep 4</span>
     <h3>Tiga cara PSE diterapkan dan cara mengevaluasinya</h3>
@@ -481,7 +501,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel" data-l="Kenapa penting" data-x="-24" data-y="6">
+<div class="panel" data-l="Kenapa penting">
   <div class="pad">
     <span class="tag t1">Konsep 5</span>
     <h3>Empat alasan guru wajib menguasai PSE</h3>
@@ -499,12 +519,12 @@ body.flat #dots{display:none}
 </div>
 
 <!-- ================= 04 CHANGE ================= -->
-<div class="panel" data-l="Change" data-mark="1" data-x="-36">
+<div class="panel" data-l="Change" data-mark="1">
   <div class="marker"><div class="num">04</div><h2>Change</h2>
   <p>Perubahan yang ingin saya lakukan</p></div>
 </div>
 
-<div class="panel" data-l="Ubah 1" data-x="30" data-y="8">
+<div class="panel" data-l="Ubah 1">
   <div class="pad">
     <span class="tag t5">Perubahan 1</span>
     <h3>Mulai mengecek perasaan sebelum masuk materi</h3>
@@ -518,7 +538,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel" data-l="Ubah 2" data-x="-30" data-y="-8">
+<div class="panel" data-l="Ubah 2">
   <div class="pad">
     <span class="tag t5">Perubahan 2</span>
     <h3>Mulai menilai proses sosial emosional, bukan hanya hasil</h3>
@@ -533,7 +553,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel" data-l="Ubah 3" data-x="26" data-y="10">
+<div class="panel" data-l="Ubah 3">
   <div class="pad">
     <span class="tag t5">Perubahan 3</span>
     <h3>Mengganti hukuman dengan pendekatan restoratif</h3>
@@ -549,12 +569,12 @@ body.flat #dots{display:none}
 </div>
 
 <!-- ================= ARTEFAK ================= -->
-<div class="panel" data-l="Artefak" data-mark="1" data-x="34">
+<div class="panel" data-l="Artefak" data-mark="1">
   <div class="marker"><div class="num">05</div><h2>Analisis Artefak</h2>
   <p>Bukti dukung hasil refleksi</p></div>
 </div>
 
-<div class="panel wide" data-l="Artefak apa" data-x="-26" data-int="1">
+<div class="panel wide" data-l="Artefak apa" data-int="1">
   <div class="pad">
     <span class="tag t2">Pertanyaan 1</span>
     <h3>Artefak yang saya jadikan bukti dukung</h3>
@@ -583,7 +603,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel wide" data-l="Pratinjau" data-x="22" data-y="-4" data-int="1">
+<div class="panel wide" data-l="Pratinjau" data-int="1">
   <div class="pad">
     <span class="tag t2">Pratinjau</span>
     <h3>Sepuluh halaman artefak</h3>
@@ -604,7 +624,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel" data-l="Mengapa" data-x="28" data-y="-6">
+<div class="panel" data-l="Mengapa">
   <div class="pad">
     <span class="tag t3">Pertanyaan 2</span>
     <h3>Mengapa artefak ini yang saya pilih?</h3>
@@ -620,7 +640,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel wide" data-l="Bagian" data-x="-24" data-y="8">
+<div class="panel wide" data-l="Bagian">
   <div class="pad">
     <span class="tag t4">Pertanyaan 3</span>
     <h3>Bagian mana dari artefak ini yang mendukung refleksi saya?</h3>
@@ -649,12 +669,12 @@ body.flat #dots{display:none}
 </div>
 
 <!-- ================= TOPIK 3 ================= -->
-<div class="panel" data-l="Topik 3" data-mark="1" data-x="-34">
+<div class="panel" data-l="Topik 3" data-mark="1">
   <div class="marker"><div class="num">06</div><h2>Topik 3</h2>
   <p>Experiential Learning untuk Pembelajaran Sosial Emosional</p></div>
 </div>
 
-<div class="panel" data-l="Definisi" data-x="26">
+<div class="panel" data-l="Definisi">
   <div class="pad">
     <span class="tag t2">Pengantar</span>
     <h3>Apa itu Experiential Learning?</h3>
@@ -671,7 +691,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel wide" data-l="Tokoh" data-x="-28" data-y="-6">
+<div class="panel wide" data-l="Tokoh">
   <div class="pad">
     <span class="tag t3">Tokoh</span>
     <h3>Para tokoh di balik Experiential Learning</h3>
@@ -697,7 +717,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel" data-l="6 Proposisi" data-x="30" data-y="8">
+<div class="panel" data-l="6 Proposisi">
   <div class="pad">
     <span class="tag t4">Materi</span>
     <h3>Enam proposisi Kolb tentang belajar</h3>
@@ -716,7 +736,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel wide" data-l="Siklus Kolb" data-x="-24">
+<div class="panel wide" data-l="Siklus Kolb">
   <div class="pad">
     <span class="tag t2">Materi inti</span>
     <h3>Siklus empat tahap Kolb (1984)</h3>
@@ -737,7 +757,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel wide" data-l="Gaya belajar" data-x="28" data-y="-8">
+<div class="panel wide" data-l="Gaya belajar">
   <div class="pad">
     <span class="tag t3">Pengayaan</span>
     <h3>Empat gaya belajar menurut Kolb</h3>
@@ -759,7 +779,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel wide" data-l="EL + PSE" data-x="-26" data-y="8">
+<div class="panel wide" data-l="EL + PSE">
   <div class="pad">
     <span class="tag t5">Integrasi</span>
     <h3>Mengapa Experiential Learning cocok untuk PSE</h3>
@@ -783,7 +803,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel wide" data-l="Cara menerapkan" data-x="30" data-y="-6">
+<div class="panel wide" data-l="Cara menerapkan">
   <div class="pad">
     <span class="tag t4">Penerapan di kelas</span>
     <h3>Langkah praktis merancangnya</h3>
@@ -805,7 +825,7 @@ body.flat #dots{display:none}
   </div>
 </div>
 
-<div class="panel" data-l="Penilaian" data-x="-22" data-y="8">
+<div class="panel" data-l="Penilaian">
   <div class="pad">
     <span class="tag t1">Penilaian</span>
     <h3>Menilai pembelajaran berbasis pengalaman</h3>
@@ -922,8 +942,7 @@ function layout(){
   document.getElementById('spacer').style.height=((N-1)*STEP+innerHeight)+'px';
   panels.forEach((p,i)=>{
     p._z=-i*DEPTH;
-    p._x=(parseFloat(p.dataset.x)||0)*0.01;
-    p._y=(parseFloat(p.dataset.y)||0)*0.01;
+    p._x=0; p._y=0;
   });
   measure();
 }
@@ -1073,6 +1092,8 @@ function applyMode(){
 modebtn.onclick=()=>{ const i=current(); FLAT=!FLAT; applyMode(); setTimeout(()=>go(i),60); };
 
 function flatFrame(){
+  const c=secOf(current());
+  tint.style.setProperty('--tint',c.join(','));
   const doc=document.documentElement;
   const max=Math.max(1,doc.scrollHeight-innerHeight);
   bar.style.width=Math.min(100,(scrollY/max)*100)+'%';
@@ -1121,9 +1142,9 @@ function tick(){
     const p=panels[i];
     const zr=p._z+camZ;
     let o;
-    if(zr<-2.30*DEPTH||zr>0.46*DEPTH) o=0;
-    else if(zr<-0.95*DEPTH)  o=(zr+2.30*DEPTH)/(1.35*DEPTH);
-    else if(zr>0.10*DEPTH)   o=1-(zr-0.10*DEPTH)/(0.36*DEPTH);
+    if(zr<-1.20*DEPTH||zr>0.16*DEPTH) o=0;
+    else if(zr<-0.62*DEPTH)  o=(zr+1.20*DEPTH)/(0.58*DEPTH);
+    else if(zr>0.02*DEPTH)   o=1-(zr-0.02*DEPTH)/(0.14*DEPTH);
     else                     o=1;
     o=Math.max(0,Math.min(1,o));
     const vis=o>0.008;
@@ -1135,9 +1156,7 @@ function tick(){
     }
     if(!vis) continue;
     const fit=p._fit||1;
-    p.style.transform=
-      `translate(-50%,-50%) translate3d(${p._x*vw}px,${p._y*vh}px,${p._z}px) `+
-      `rotateY(${-p._x*16}deg) rotateX(${p._y*12}deg) scale(${fit})`;
+    p.style.transform=`translate(-50%,-50%) translateZ(${p._z}px) scale(${fit})`;
   }
 
   const cur=Math.round(cam/STEP);
@@ -1147,6 +1166,7 @@ function tick(){
   if(best) best.classList.add('on');
 
   glow.style.transform=`translate3d(${-mx*40}px,${-my*40-prog*60}px,0) scale(1.08)`;
+  layers(camZ);
   drawSky();
   requestAnimationFrame(tick);
 }
@@ -1174,36 +1194,58 @@ function drawSky(){
   g.globalAlpha=1;
 }
 
-/* ---------- cincin terowongan ---------- */
-const frag=document.createDocumentFragment();
-for(let i=0;i<Math.ceil(N*0.9);i++){
-  const r=document.createElement('div');
-  r.className='ring'+(i%2?' alt':'');
-  const z=-i*(DEPTH*1.1);
-  r.style.transform=`translateZ(${z}px) rotateZ(${(i%2?1:-1)*1.6}deg)`;
-  r.style.opacity='0'; r._z=z; frag.appendChild(r);
+/* ---------- warna tiap bagian ---------- */
+const PALET=[[124,92,255],[34,211,238],[244,114,182],[167,139,250],[52,211,153],[251,191,36],[96,165,250],[124,92,255]];
+const markIdx=marks.filter(m=>m.mark).map(m=>m.i);
+function secOf(i){
+  let k=0;
+  for(let j=0;j<markIdx.length;j++) if(i>=markIdx[j]) k=j;
+  return PALET[Math.min(k,PALET.length-1)];
 }
-world.appendChild(frag);
-const rings=[...document.querySelectorAll('.ring')];
-(function ringLoop(){
-  const camZ=cam/STEP*DEPTH;
-  for(const r of rings){
-    const zr=r._z+camZ; let o=0;
-    if(zr>-2.6*DEPTH&&zr<0.35*DEPTH){
-      o= zr<-1.2*DEPTH ? (zr+2.6*DEPTH)/(1.4*DEPTH)*0.34
-        : (zr>0 ? Math.max(0,0.34*(1-zr/(0.35*DEPTH))) : 0.34);
-    }
-    r.style.opacity=o.toFixed(3);
-  }
-  requestAnimationFrame(ringLoop);
-})();
+const mix=(a,b,t)=>[0,1,2].map(k=>Math.round(a[k]+(b[k]-a[k])*t));
 
-applyMode();
+/* ---------- lapisan pembatas antar panel ---------- */
+const gates=[];
+{
+  const frag=document.createDocumentFragment();
+  for(let i=0;i<N-1;i++){
+    const c=secOf(i+1);
+    const el=document.createElement('div');
+    el.className='gate';
+    el.innerHTML='<i></i>';
+    el._z=-(i+0.5)*DEPTH;
+    el.style.transform=`translateZ(${el._z}px)`;
+    el.style.background=
+      `radial-gradient(58% 46% at 50% 50%, rgba(${c[0]},${c[1]},${c[2]},.34), rgba(5,6,16,.99) 74%)`;
+    el.firstChild.style.borderColor=`rgba(${c[0]},${c[1]},${c[2]},.55)`;
+    el.firstChild.style.boxShadow=`0 0 120px rgba(${c[0]},${c[1]},${c[2]},.30) inset`;
+    gates.push(el); frag.appendChild(el);
+  }
+  world.appendChild(frag);
+}
+
+const tint=document.getElementById('tint');
+function layers(camZ){
+  for(const g of gates){
+    const zg=g._z+camZ; let o=0;
+    if(zg>-2.0*DEPTH && zg<-0.12*DEPTH){
+      o = zg<=-0.50*DEPTH ? 0.97 : 0.97*(1-(zg+0.50*DEPTH)/(0.38*DEPTH));
+    }
+    o=Math.max(0,Math.min(0.97,o));
+    const vis=o>0.01;
+    if(g._vis!==vis){ g.style.visibility=vis?'visible':'hidden'; g._vis=vis; }
+    if(vis) g.style.opacity=o.toFixed(3);
+  }
+  const f=camZ/DEPTH, i=Math.max(0,Math.min(N-1,Math.floor(f))), t=Math.min(1,Math.max(0,f-i));
+  const c=mix(secOf(i),secOf(Math.min(N-1,i+1)),t);
+  tint.style.setProperty('--tint',c.join(','));
+}
+
 setTimeout(measure,400);
 addEventListener('load',()=>setTimeout(measure,250));
 addEventListener('scroll',()=>{ if(FLAT) return; },{passive:true});
 requestAnimationFrame(tick);
 })();
 </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a349371cd87ce794',t:'MTc4ODMxNzUxMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
